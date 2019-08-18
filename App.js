@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
-import { StackNavigator, DrawerNavigator } from 'react-navigation'
+import { DrawerNavigator } from 'react-navigation'
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import {
   Button,
@@ -19,48 +19,47 @@ import {
   View
 } from 'react-native'
 
+import ViewDeck from './components/ViewDeck'
+import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 
-export default class App extends React.Component {
-render(){
-  return (
-    <AppContainer/>
-  );
- }
-}
-
-class Home extends React.Component {
+class App extends React.Component {
 
   state = {
     decks : {
       deck1 : {
         card1 : {
-          question : "Are You Prime?",
+          question : "Question for Deck 1 Card 1",
           answer : "Yes"
         },
         card2 : {
-          question : "Are you Happy",
+          question : "Do you like me?",
+          answer : "Yes"
+        },
+        card3 : {
+          question : "Do you potatos?",
           answer : "Yes"
         }
       },
       deck2 : {
         card1 : {
-          question : "Are You Prime?",
+          question : "Do you like ice cream?",
           answer : "Yes"
         },
         card2 : {
-          question : "Are you Happy",
+          question : "Deck 2 Card 2",
           answer : "Yes"
         }
       },
       deck3 : {
         card1 : {
-          question : "Are You Prime?",
+          question : "Deck 3 Card 1",
           answer : "Yes"
         },
         card2 : {
-          question : "Are you Happy",
+          question : "Deck 3 Card 2",
           answer : "Yes"
         }
       },
@@ -68,16 +67,42 @@ class Home extends React.Component {
     }
   }
 
+  
 
-  render() {
+addNewCard(card){
+
+    console.log("adding new card!");
+    console.log("adding new card!");
+    console.log("adding new card!");
+    console.log("adding new card!");
+}
+
+
+render(){
+  return (
+    <AppContainer/>
+  );
+ }
+}
+
+function Home ({ navigation }) {
+
+
+
+
 
     const decks = Object.keys(this.state.decks)
     const br = `\n`;
 
-    handlePress = (deck) => {
-      alert(deck)
+    //
+    // handlePress = (deck) => {
+    //     console.log("######");
+    //     console.log(this.state.decks[deck]);
+    //
+    //     <ViewDeck deck={this.state.decks[deck]} />
+    // }
 
-    }
+
 
     return (
 
@@ -88,18 +113,24 @@ class Home extends React.Component {
                 {decks.map( deck =>
                 {
                   return(
-                    <TouchableHighlight onPress={ () => handlePress(deck)}>
-                        <Text key={deck}> {deck}{br}{br}</Text>
+                    <TouchableHighlight key={deck} onPress={ () => navigation.navigate(
+                      'ViewDeck',
+                      {
+                        deck : this.state.decks[deck],
+                        addNewCard : (card) => {this.props.addNewCard(card)},
+                      }
+                    )}>
+                        <Text> {deck}{br}{br}</Text>
                     </TouchableHighlight>
                   )
                 })
               }
-
-
     </View>
-  )
-}
-}
+  )  // return
+
+} // home
+
+
 
 class CreateDeck extends React.Component {
   render() {return (
@@ -112,81 +143,92 @@ class CreateDeck extends React.Component {
 }}
 
 
-const AppDrawerNavigator = createDrawerNavigator(
+// const AppDrawerNavigator = createDrawerNavigator(
+//   {
+//     Home : Home,
+//     CreateDeck : CreateDeck
+//   },
+//   {
+//     defaultNavigationOptions : {
+//       headerStyle : {
+//         backgroundColor : 'white'
+//       },
+//     }
+//   }
+// )
+
+
+// const TabNavigator = createBottomTabNavigator({
+//     Decks : Home,
+//     AddDeck : CreateDeck,
+//     ViewDeck : ViewDeck,
+//     AddCard : AddCard,
+//     Quiz : Quiz
+// })
+
+const StackNavigator = createStackNavigator(
   {
-    Home : Home,
-    CreateDeck : CreateDeck
+    Decks : {
+      screen : Home,
+    },
+    AddDeck : {
+      screen : CreateDeck,
+      navigationOptions : {
+        title : "Create Deck",
+        headerTintColor : 'red',
+        headerStyle: {
+              backgroundColor: '#000',
+            }
+        }
+    },
+    ViewDeck : {
+      screen : ViewDeck,
+      navigationOptions : {
+        title : "View Decks",
+        headerTintColor : 'red',
+        headerStyle: {
+              backgroundColor: '#000',
+            }
+        }
+    },
+    AddCard : {
+      screen : AddCard,
+      navigationOptions : {
+        title : "Add Card",
+        headerTintColor : 'red',
+        headerStyle: {
+              backgroundColor: '#000',
+            }
+        }
+    },
+    Quiz : {
+      screen : Quiz,
+      navigationOptions : {
+        title : "Quiz",
+        headerTintColor : 'red',
+        headerStyle: {
+              backgroundColor: '#000',
+            }
+        }
+    }
   },
+
   {
-    defaultNavigationOptions : {
-      headerStyle : {
-        backgroundColor : 'white'
-      },
-      tabBarIcon : () => <FontAwesome name='home' size='30' color='black' />
+  defaultNavigationOptions : {
+    title : "Flash Cards",
+    headerTintColor : 'red',
+    headerStyle: {
+          backgroundColor: '#000',
+        }
     }
   }
+
 )
 
 
-const TabNavigator = createBottomTabNavigator({
-    Decks : Home,
-    AddDeck : CreateDeck,
-
-})
 
 //export default createAppContainer(TabNavigator);
-const AppContainer = createAppContainer(TabNavigator);
-
-//const MyTabNavigator = createBottomTabNavigator(AppDrawerNavigator);
-
-//const AppContainer = createAppContainer(AppDrawerNavigator);
-// const AppContainer = createAppContainer(Tabs);
-//
-//
-//
-// const TabBarComponent = (props) => (<BottomTabBar {...props} />);
-//
-// const TabScreens = createBottomTabNavigator(
-//   {
-//     tabBarComponent: props =>
-//       <TabBarComponent
-//         {...props}
-//         style={{ borderTopColor: '#605F60' }}
-//       />,
-//   },
-// );
-
-
-
-
-// const MainNavigator = createStackNavigator({...});
-// const App = createAppContainer(MainNavigator);
-
-
-
-// const Home = ({ navigation }) => (
-//   <View>
-//     <Text>This is the Home view</Text>
-//     <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Dashboard')}>
-//       <Text>Press here for the Dashboard</Text>
-//     </TouchableOpacity>
-//   </View>
-// );
-//
-// const Dashboard = () => (
-//   <View>
-//     <Text>This is the Dashboard</Text>
-//     <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Home')}>
-//       <Text>Press here for the Home</Text>
-//     </TouchableOpacity>
-//   </View>
-// );
-//
-//
-
-//
-// const Stack = createAppContainer(MainNavigator);
-
+const AppContainer = createAppContainer(StackNavigator);
 
 
 
@@ -212,3 +254,5 @@ const styles = StyleSheet.create({
     color : '#fff'
   }
 })
+
+export default App;
