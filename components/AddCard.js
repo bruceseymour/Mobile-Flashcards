@@ -1,85 +1,70 @@
 import React from 'react'
 import { Text, TextInput, StyleSheet, TouchableHighlight, View } from 'react-native'
-
-
-
-
+import { connect } from 'react-redux'
+import { addCard } from '../actions/'
 
 class AddCard extends React.Component {
 
-   state = {
-     question : '',
-     answer : ''
-   };
+state = {
+    question : '',
+    answer : ''
+  }
 
+mySubmit(deckId, cardId, question, answer) {
+
+    const { dispatch, navigation } = this.props
+        let newCard = {
+          [cardId] : {
+            question : question,
+            answer : answer
+          }
+        }
+
+        dispatch(
+          addCard(
+          {
+          card : newCard,
+          deckId : deckId
+         }
+          )
+        )
+        navigation.navigate('ViewDeck');
+}
 
 
 render() {
 
-  const { navigation } = this.props;
+  let cardId = Math.random().toString(36).substr(2, 9);
 
+  const { dispatch, navigation } = this.props
+  const { question, answer } = this.state
+  const deckId = navigation.getParam('deckId')
 
-
-
-  console.log("Props3: ", this.props);
-  console.dir(this.props);
-
-
-
-  function mySubmit() {
-
-    let newCard = {
-      card4 : {
-        question : "q card 4",
-        answer : "Yes"
-      }
-    }
-
-navigation.getParam('addNewCard')()
-
-
-    navigation.navigate(
-              'ViewDeck',
-              {
-                data : 1,
-                addNewCard : navigation.getParam('addNewCard')()
-              }
-            );
-
-
-  }
+  console.log("q: ", question, "A: ", answer);
 
   return (
     <View>
       <View style={{height : 40}}/>
       <Text>Question</Text>
-
         <TextInput
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           onChangeText={(question) => this.setState({question})}
           value={this.state.question}
         />
-
         <Text>Answer</Text>
-
-
         <TextInput
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
             onChangeText={(answer) => this.setState({answer})}
           value={this.state.answer}
         />
 
-
-        <TouchableHighlight onPress={ () => mySubmit() }>
+        <TouchableHighlight onPress={ () => this.mySubmit(deckId, cardId, question, answer) }>
                 <Text style={styles.btn}>Add Card</Text>
         </TouchableHighlight>
-
-
-
-
     </View>
   )
 }
+
 }
 
 const styles = StyleSheet.create({
@@ -107,4 +92,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AddCard;
+const mapStateToProps = (state) => {
+  return {
+      deck : state.flashcards.decks
+  }
+}
+
+export default connect(mapStateToProps)(AddCard);

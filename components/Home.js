@@ -1,4 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { createStackNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
+import { DrawerNavigator } from 'react-navigation'
+
 import {
   Button,
   ScrollView,
@@ -15,11 +19,42 @@ import {
 class Home extends React.Component {
   render() {
 
+  const br = `\n`;
+  const { dispatch, navigation } = this.props;
+  let decks = Object.keys(this.props.flashcards)
+
   return (
 
-}
-}
+    <View style={styles.container}>
+            <View style={{height : 40}}/>
+            <Text>Mobile Flashcards{br}</Text>
 
+                {decks.map( deck =>
+                {
+                  return(
+                    <TouchableHighlight key={deck} onPress={ () => navigation.navigate(
+                      'ViewDeck',
+                    {
+                      deck : deck
+                    }
+                    )}>
+                        <Text> {deck}{br}{br}</Text>
+                    </TouchableHighlight>
+                  )
+                })
+              }
+
+
+              <TouchableHighlight  onPress={ () => navigation.navigate(
+                'Counter'
+              )}>
+                  <Text>Counter</Text>
+              </TouchableHighlight>
+
+    </View>
+)
+}
+}
 
 
 const styles = StyleSheet.create({
@@ -47,5 +82,10 @@ const styles = StyleSheet.create({
   }
 })
 
+const mapStateToProps = (state) => {
+  return {
+    flashcards : state.flashcards.decks
+  }
+}
 
-export default Home
+export default connect(mapStateToProps)(Home);

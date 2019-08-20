@@ -19,117 +19,59 @@ import {
   View
 } from 'react-native'
 
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
+import reducers from './reducers/'
+
+
 import ViewDeck from './components/ViewDeck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
+import Home from './components/Home'
+import Counter from './components/Counter'
+import Startup from './components/Startup'
+
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
+
+
+/**
+ * Logs all actions and states after they are dispatched.
+ */
+const logger = store => next => action => {
+//  console.group(action.type)
+  //console.info('dispatching', action)
+  let result = next(action)
+  //console.log('next state', store.getState())
+//  console.groupEnd(action.type)
+  return result
+}
+
+let createStoreWithMiddleware = applyMiddleware(logger)(createStore)
+
+let store = createStoreWithMiddleware(reducers)
+
+window.store = store;
+
+
+
+// const store = createStore(reducers)
+
+
 
 
 class App extends React.Component {
 
-  state = {
-    decks : {
-      deck1 : {
-        card1 : {
-          question : "Question for Deck 1 Card 1",
-          answer : "Yes"
-        },
-        card2 : {
-          question : "Do you like me?",
-          answer : "Yes"
-        },
-        card3 : {
-          question : "Do you potatos?",
-          answer : "Yes"
-        }
-      },
-      deck2 : {
-        card1 : {
-          question : "Do you like ice cream?",
-          answer : "Yes"
-        },
-        card2 : {
-          question : "Deck 2 Card 2",
-          answer : "Yes"
-        }
-      },
-      deck3 : {
-        card1 : {
-          question : "Deck 3 Card 1",
-          answer : "Yes"
-        },
-        card2 : {
-          question : "Deck 3 Card 2",
-          answer : "Yes"
-        }
-      },
-
-    }
-  }
-
-  
-
-addNewCard(card){
-
-    console.log("adding new card!");
-    console.log("adding new card!");
-    console.log("adding new card!");
-    console.log("adding new card!");
-}
 
 
 render(){
   return (
-    <AppContainer/>
+    <Provider store={store}>
+      <Startup/>
+      <AppContainer/>
+    </Provider>
   );
  }
 }
-
-function Home ({ navigation }) {
-
-
-
-
-
-    const decks = Object.keys(this.state.decks)
-    const br = `\n`;
-
-    //
-    // handlePress = (deck) => {
-    //     console.log("######");
-    //     console.log(this.state.decks[deck]);
-    //
-    //     <ViewDeck deck={this.state.decks[deck]} />
-    // }
-
-
-
-    return (
-
-    <View style={styles.container}>
-            <View style={{height : 40}}/>
-            <Text>Mobile Flashcards{br}</Text>
-
-                {decks.map( deck =>
-                {
-                  return(
-                    <TouchableHighlight key={deck} onPress={ () => navigation.navigate(
-                      'ViewDeck',
-                      {
-                        deck : this.state.decks[deck],
-                        addNewCard : (card) => {this.props.addNewCard(card)},
-                      }
-                    )}>
-                        <Text> {deck}{br}{br}</Text>
-                    </TouchableHighlight>
-                  )
-                })
-              }
-    </View>
-  )  // return
-
-} // home
-
 
 
 class CreateDeck extends React.Component {
@@ -141,22 +83,6 @@ class CreateDeck extends React.Component {
     </View>
   )
 }}
-
-
-// const AppDrawerNavigator = createDrawerNavigator(
-//   {
-//     Home : Home,
-//     CreateDeck : CreateDeck
-//   },
-//   {
-//     defaultNavigationOptions : {
-//       headerStyle : {
-//         backgroundColor : 'white'
-//       },
-//     }
-//   }
-// )
-
 
 // const TabNavigator = createBottomTabNavigator({
 //     Decks : Home,
@@ -171,6 +97,12 @@ const StackNavigator = createStackNavigator(
     Decks : {
       screen : Home,
     },
+
+    Counter : {
+      screen : Counter
+    },
+
+
     AddDeck : {
       screen : CreateDeck,
       navigationOptions : {

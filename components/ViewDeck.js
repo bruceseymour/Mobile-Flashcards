@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {
   Button,
   ScrollView,
@@ -17,34 +18,29 @@ import AddCard from './AddCard'
 class ViewDeck extends React.Component {
   render() {
 
-  //console.log(this.props.navigation);
-//this.props.navigation.state.params.deck
+const { dispatch, navigation } = this.props;
 
-const { navigation } = this.props;
-
-const cardsArray = Object.keys(navigation.getParam('deck'));
-
-const cards = navigation.getParam('deck')
-
-let addNewCard = navigation.getParam('addNewCard')
+const deckId = navigation.getParam('deck')
+let deck = this.props.deck[deckId];
 
 
-console.log(cards);
+
+const cards = Object.keys(deck)
+//console.log("Deck: ", deck , "Cards: ", cards);
 
 const br = `\n`;
 
-console.log("AddNewCard", this.props.addNewCard);
-
-  return (
+return (
 <ScrollView>
 <Text>
     View Deck
-    {cardsArray.map( (card) =>{
+    {cards.map( (card) =>{
       return (
-      <Text id={card}>
-      {br}{card}{br}
-      {cards[card].question}{br}
-      {cards[card].answer}
+      <Text key={card} id={card}>
+      {br}
+      Card ID: {card}{br}
+      {deck[card].question}{br}
+      {deck[card].answer}
       {br}{br}
       </Text>
     )
@@ -53,10 +49,7 @@ console.log("AddNewCard", this.props.addNewCard);
 
 <TouchableHighlight onPress={ () => navigation.navigate(
           'AddCard',
-          {
-            data : 1,
-            addNewCard : (card) => navigation.getParam('addNewCard')()
-          }
+          {deckId : deckId}
         )}>
         <Text style={styles.btn}>Add Card</Text>
 </TouchableHighlight>
@@ -95,5 +88,10 @@ const styles = StyleSheet.create({
   }
 })
 
+const mapStateToProps = (state, deckId) => {
+  return {
+      deck : state.flashcards.decks
+  }
+}
 
-export default ViewDeck
+export default connect(mapStateToProps)(ViewDeck);
