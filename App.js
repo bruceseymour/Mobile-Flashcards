@@ -30,6 +30,7 @@ import Quiz from './components/Quiz'
 import Home from './components/Home'
 import Counter from './components/Counter'
 import Startup from './components/Startup'
+import CreateDeck from './components/CreateDeck'
 
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
@@ -45,23 +46,13 @@ const logger = store => next => action => {
 //  console.groupEnd(action.type)
   return result
 }
-
 let createStoreWithMiddleware = applyMiddleware(logger)(createStore)
-
 let store = createStoreWithMiddleware(reducers)
-
-window.store = store;
-
-
-
-// const store = createStore(reducers)
 
 
 
 
 class App extends React.Component {
-
-
 
 render(){
   return (
@@ -73,16 +64,6 @@ render(){
  }
 }
 
-
-class CreateDeck extends React.Component {
-  render() {return (
-    <View style={styles.container}>
-      <View style={{height : 40}}/>
-      <Text>Create Deck</Text>
-
-    </View>
-  )
-}}
 
 // const TabNavigator = createBottomTabNavigator({
 //     Decks : Home,
@@ -103,7 +84,7 @@ const StackNavigator = createStackNavigator(
     },
 
 
-    AddDeck : {
+    CreateDeck : {
       screen : CreateDeck,
       navigationOptions : {
         title : "Create Deck",

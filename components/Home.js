@@ -27,7 +27,7 @@ class Home extends React.Component {
 
     <View style={styles.container}>
             <View style={{height : 40}}/>
-            <Text>Mobile Flashcards{br}</Text>
+            <Text>{br}</Text>
 
                 {decks.map( deck =>
                 {
@@ -49,6 +49,12 @@ class Home extends React.Component {
                 'Counter'
               )}>
                   <Text>Counter</Text>
+              </TouchableHighlight>
+            <Text>{br}</Text>
+              <TouchableHighlight  onPress={ () => navigation.navigate(
+                'CreateDeck'
+              )}>
+                  <Text>Create Deck</Text>
               </TouchableHighlight>
 
     </View>

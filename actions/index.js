@@ -5,8 +5,17 @@ export const DECREMENT = 'DECREMENT'
 export const ADDCARD = 'ADDCARD'
 export const INITIALDATA = 'INITIALDATA'
 export const DELETEDECKS = 'DELETEDECKS'
+export const CREATENEWDECK = 'CREATENEWDECK'
+
 
 // ACTION CREATORS
+
+export const createNewDeck = (name) => {
+return {
+    type : CREATENEWDECK,
+    payload : name
+  }
+}
 
 export const addCard = (card) => {
   return {

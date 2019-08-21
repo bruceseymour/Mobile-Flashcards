@@ -31,7 +31,7 @@ return (
 
 initialDecks = {
   decks : {
-    deck1 : {
+    Deck1 : {
       card1 : {
         question : "Question for Deck 1 Card 1",
         answer : "Yes"
@@ -45,7 +45,7 @@ initialDecks = {
         answer : "Yes"
       }
     },
-    deck2 : {
+    Deck2 : {
       card1 : {
         question : "Do you like ice cream?",
         answer : "Yes"
@@ -55,7 +55,7 @@ initialDecks = {
         answer : "Yes"
       }
     },
-    deck3 : {
+    Deck3 : {
       card1 : {
         question : "Deck 3 Card 1",
         answer : "Yes"

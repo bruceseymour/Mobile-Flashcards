@@ -23,6 +23,7 @@ const { dispatch, navigation } = this.props;
 const deckId = navigation.getParam('deck')
 let deck = this.props.deck[deckId];
 
+let deckName = Object.values(deckId);
 
 
 const cards = Object.keys(deck)
@@ -33,7 +34,9 @@ const br = `\n`;
 return (
 <ScrollView>
 <Text>
-    View Deck
+    Deck Name:  {deckName}   {br}
+    Cards: {cards.length}
+    {br}
     {cards.map( (card) =>{
       return (
       <Text key={card} id={card}>
