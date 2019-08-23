@@ -68,13 +68,18 @@ render(){
 }
 
 const TabNavigator = createAppContainer(createBottomTabNavigator({
-    Manage : Home,
-    Quiz : Quiz
+    Quiz : Quiz,
+    Manage : Home
+
 }))
 
 const StackNavigator = createStackNavigator(
   {
     Tabs : TabNavigator,
+    Quiz : {
+      screen : Quiz,
+    },
+
     Decks : {
       screen : Home,
     },
@@ -96,6 +101,7 @@ const StackNavigator = createStackNavigator(
     ViewDeck : {
       screen : ViewDeck,
       navigationOptions : {
+        animationEnabled: true,
         title : "View Decks",
         headerTintColor : 'red',
         headerStyle: {
@@ -107,16 +113,6 @@ const StackNavigator = createStackNavigator(
       screen : AddCard,
       navigationOptions : {
         title : "Add Card",
-        headerTintColor : 'red',
-        headerStyle: {
-              backgroundColor: '#000',
-            }
-        }
-    },
-    Quiz : {
-      screen : Quiz,
-      navigationOptions : {
-        title : "Quiz",
         headerTintColor : 'red',
         headerStyle: {
               backgroundColor: '#000',

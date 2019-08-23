@@ -33,36 +33,36 @@ initialDecks = {
   decks : {
     Deck1 : {
       card1 : {
-        question : "Question for Deck 1 Card 1",
-        answer : "Yes"
+        question : "You like React Native.",
+        answer : "Correct"
       },
       card2 : {
-        question : "Do you like me?",
-        answer : "Yes"
+        question : "Tyler McGinnus Awesome?",
+        answer : "Correct"
       },
       card3 : {
-        question : "Do you potatos?",
-        answer : "Yes"
+        question : "Do you like Cobalt?",
+        answer : "Incorrect"
       }
     },
     Deck2 : {
       card1 : {
-        question : "Do you like ice cream?",
-        answer : "Yes"
+        question : "You like to eat squash",
+        answer : "Incorrect"
       },
       card2 : {
-        question : "Deck 2 Card 2",
-        answer : "Yes"
+        question : "Do you like Pizza?",
+        answer : "Correct"
       }
     },
     Deck3 : {
       card1 : {
-        question : "Deck 3 Card 1",
-        answer : "Yes"
+        question : "Do you like crayons?",
+        answer : "Correct"
       },
       card2 : {
-        question : "Deck 3 Card 2",
-        answer : "Yes"
+        question : "Do you like robots?",
+        answer : "Correct"
       }
     },
 

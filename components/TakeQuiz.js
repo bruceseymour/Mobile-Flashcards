@@ -57,6 +57,21 @@ recordScore(userAnswer, correctAnswer, totalCards){
       }
 }
 
+resetQuiz() {
+
+  this.setState( () => ({
+    cardIndex : 0,
+    currentCardId : "",
+    currentQuestion: "",
+    currentAnswer: "",
+    correctAnswers : 0,
+    incorrectAnswers : 0,
+    showAnswer: false,
+    totalCards : 0,
+    finished : false
+  }))
+
+}
 
 
 render() {
@@ -68,21 +83,41 @@ let deck = this.props.deck[deckId];
 let deckName = Object.values(deckId);
 let cards = Object.keys(deck)
 let totalCards = cards.length
-
+let cardsRemaining = parseInt(totalCards) - parseInt(this.state.cardIndex)
 
 const br = `\n`;
 
 
 if (this.state.finished){
      return(
-       <Text>
+       <View>
         <Text>Wahooo!  You're Done {br}{br}</Text>
         <Text>Correct: {this.state.correctAnswers} out of {totalCards}{br}{br}</Text>
-        <Text>Score: {  parseFloat( (this.state.correctAnswers / totalCards)*100 ).toFixed(0)+"%" } </Text>
-      </Text>
+        <Text>Score: {parseFloat( (this.state.correctAnswers / totalCards)*100 ).toFixed(0)+"%" }{br}{br}</Text>
+
+        <TouchableHighlight onPress={ () => this.resetQuiz()}>
+            <Text style={styles.btn}>Retake Quiz</Text>
+        </TouchableHighlight>
+
+        <Text>{br}{br}</Text>
+
+        <TouchableHighlight  onPress={ () => navigation.navigate(
+          'Quiz'
+          )}>
+
+            <Text style={styles.btn}>View Decks</Text>
+        </TouchableHighlight>
+
+        <Text>{br}{br}</Text>
+        <TouchableHighlight onPress={ () => navigation.navigate('Decks')}>
+            <Text style={styles.btn}>Manage Decks/Cards</Text>
+        </TouchableHighlight>
+
+
+
+      </View>
      )
 }
-
 
 return (
 
@@ -90,9 +125,10 @@ return (
 
 
 <Text>
-
-  <Text>{br}Total Cards: {totalCards}{br}</Text>
-  <Text>{br}{br}Card ID: {this.state.currentCardId} {br}</Text>
+  <Text>{br}Deck Name: {deckId} {br}</Text>
+  <Text>Total Cards: {totalCards}{br}</Text>
+  <Text>Cards Remaining: {cardsRemaining}{br}</Text>
+  <Text>Card ID: {cards[this.state.cardIndex]}{br}</Text>
 
   <Text style={styles.question}>{deck[cards[this.state.cardIndex]].question}</Text>
 
@@ -103,12 +139,12 @@ return (
   {br}{br}
   </Text>
 
-<TouchableHighlight onPress={ () => this.recordScore("Yes", deck[cards[this.state.cardIndex]].answer, totalCards)}>
-        <Text style={styles.btn}>Yes</Text>
+<TouchableHighlight onPress={ () => this.recordScore("Correct", deck[cards[this.state.cardIndex]].answer, totalCards)}>
+        <Text style={styles.btn}>Correct</Text>
 </TouchableHighlight>
       <Text>{br}{br}</Text>
-<TouchableHighlight onPress={ () => this.recordScore("No", deck[cards[this.state.cardIndex]].answer, totalCards)}>
-        <Text style={styles.btn}>No</Text>
+<TouchableHighlight onPress={ () => this.recordScore("Incorrect", deck[cards[this.state.cardIndex]].answer, totalCards)}>
+        <Text style={styles.btn}>Incorrect</Text>
 </TouchableHighlight>
       <Text>{br}{br}</Text>
 <TouchableHighlight onPress={ () => this.toggleAnswer()}>
