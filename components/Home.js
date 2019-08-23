@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createStackNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { DrawerNavigator } from 'react-navigation'
 
 import {
@@ -16,6 +16,8 @@ import {
   View
 } from 'react-native'
 
+import Quiz from './Quiz'
+
 class Home extends React.Component {
   render() {
 
@@ -27,7 +29,7 @@ class Home extends React.Component {
 
     <View style={styles.container}>
             <View style={{height : 40}}/>
-            <Text>{br}</Text>
+            <Text>Manage Flashcards{br}{br}{br}</Text>
 
                 {decks.map( deck =>
                 {
@@ -45,23 +47,16 @@ class Home extends React.Component {
               }
 
 
-              <TouchableHighlight  onPress={ () => navigation.navigate(
-                'Counter'
-              )}>
-                  <Text>Counter</Text>
-              </TouchableHighlight>
-            <Text>{br}</Text>
+
+              <Text>{br}</Text>
+
               <TouchableHighlight  onPress={ () => navigation.navigate(
                 'CreateDeck'
-              )}>
+                )}>
                   <Text>Create Deck</Text>
               </TouchableHighlight>
-
     </View>
-)
-}
-}
-
+)}}
 
 const styles = StyleSheet.create({
   container: {

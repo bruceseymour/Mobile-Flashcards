@@ -4,7 +4,7 @@ export const INCREMENT = 'INCREMENT'
 export const DECREMENT = 'DECREMENT'
 export const ADDCARD = 'ADDCARD'
 export const INITIALDATA = 'INITIALDATA'
-export const DELETEDECKS = 'DELETEDECKS'
+export const DELETEDECK = 'DELETEDECKS'
 export const CREATENEWDECK = 'CREATENEWDECK'
 
 
@@ -45,9 +45,9 @@ export const getStarted = (data) => {
   }
 }
 
-export const deleteDecks = (data) => {
+export const deleteDeck = (data) => {
   return {
-    type : DELETEDECKS,
+    type : DELETEDECK,
     payload : data
   }
 }

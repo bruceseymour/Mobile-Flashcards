@@ -14,25 +14,32 @@ import {
 } from 'react-native'
 
 import AddCard from './AddCard'
+import { deleteDeck } from '../actions/'
 
 class ViewDeck extends React.Component {
+
+deleteDeck(deckId) {
+    console.log("Delete Deck", deckId);
+    const { dispatch, navigation } = this.props
+    dispatch(deleteDeck(deckId))
+    navigation.navigate('Home');
+  }
+
+
   render() {
 
 const { dispatch, navigation } = this.props;
 
 const deckId = navigation.getParam('deck')
 let deck = this.props.deck[deckId];
-
 let deckName = Object.values(deckId);
-
-
 const cards = Object.keys(deck)
-//console.log("Deck: ", deck , "Cards: ", cards);
-
 const br = `\n`;
 
 return (
 <ScrollView>
+
+
 <Text>
     Deck Name:  {deckName}   {br}
     Cards: {cards.length}
@@ -56,7 +63,10 @@ return (
         )}>
         <Text style={styles.btn}>Add Card</Text>
 </TouchableHighlight>
-
+<Text>{br}</Text>
+<TouchableHighlight onPress={ () => this.deleteDeck(deckId)}>
+        <Text style={styles.btn}>Delete Deck</Text>
+</TouchableHighlight>
 
 
 </ScrollView>

@@ -31,6 +31,8 @@ import Home from './components/Home'
 import Counter from './components/Counter'
 import Startup from './components/Startup'
 import CreateDeck from './components/CreateDeck'
+import TakeQuiz from './components/TakeQuiz'
+import { localNotification } from './utils/utils'
 
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
@@ -40,19 +42,20 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
  */
 const logger = store => next => action => {
 //  console.group(action.type)
-  //console.info('dispatching', action)
+//  console.info('dispatching', action)
   let result = next(action)
-  //console.log('next state', store.getState())
+//  console.log('next state', store.getState())
 //  console.groupEnd(action.type)
   return result
 }
 let createStoreWithMiddleware = applyMiddleware(logger)(createStore)
 let store = createStoreWithMiddleware(reducers)
 
-
-
-
 class App extends React.Component {
+
+componentDidMount() {
+    localNotification()
+}
 
 render(){
   return (
@@ -64,17 +67,14 @@ render(){
  }
 }
 
-
-// const TabNavigator = createBottomTabNavigator({
-//     Decks : Home,
-//     AddDeck : CreateDeck,
-//     ViewDeck : ViewDeck,
-//     AddCard : AddCard,
-//     Quiz : Quiz
-// })
+const TabNavigator = createAppContainer(createBottomTabNavigator({
+    Manage : Home,
+    Quiz : Quiz
+}))
 
 const StackNavigator = createStackNavigator(
   {
+    Tabs : TabNavigator,
     Decks : {
       screen : Home,
     },
@@ -82,7 +82,6 @@ const StackNavigator = createStackNavigator(
     Counter : {
       screen : Counter
     },
-
 
     CreateDeck : {
       screen : CreateDeck,
@@ -123,7 +122,18 @@ const StackNavigator = createStackNavigator(
               backgroundColor: '#000',
             }
         }
+    },
+    TakeQuiz : {
+      screen : TakeQuiz,
+      navigationOptions : {
+        title : "Take Quiz",
+        headerTintColor : 'red',
+        headerStyle: {
+              backgroundColor: '#000',
+            }
+        }
     }
+
   },
 
   {
@@ -138,12 +148,7 @@ const StackNavigator = createStackNavigator(
 
 )
 
-
-
-//export default createAppContainer(TabNavigator);
 const AppContainer = createAppContainer(StackNavigator);
-
-
 
 const styles = StyleSheet.create({
   container: {
