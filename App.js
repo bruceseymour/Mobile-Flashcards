@@ -23,7 +23,6 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './reducers/'
 
-
 import ViewDeck from './components/ViewDeck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
@@ -48,6 +47,7 @@ const logger = store => next => action => {
 //  console.groupEnd(action.type)
   return result
 }
+
 let createStoreWithMiddleware = applyMiddleware(logger)(createStore)
 let store = createStoreWithMiddleware(reducers)
 
@@ -67,11 +67,26 @@ render(){
  }
 }
 
-const TabNavigator = createAppContainer(createBottomTabNavigator({
-    Quiz : Quiz,
-    Manage : Home
-
-}))
+const TabNavigator = createAppContainer(createBottomTabNavigator(
+  {
+    Quiz : {
+      screen: Quiz,
+      navigationOptions: {
+        tabBarLabel: "Quiz",
+        tabBarIcon: ({ tintColor }) => (
+          <FontAwesome name="play" size={20}/>
+        )
+      },},
+    Manage : {
+      screen: Home,
+      navigationOptions: {
+        tabBarLabel: "Home",
+        tabBarIcon: ({ tintColor }) => (
+          <FontAwesome name="home" size={20}/>
+        )
+      },}
+  }
+))
 
 const StackNavigator = createStackNavigator(
   {

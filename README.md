@@ -6,6 +6,11 @@
 * [Loading Instructions](#Loading)
 * [Miscellany](#miscellany)
 
+##### Testing
+This project has been tested on:
+* iOS iPhone X
+* Google Pixel 3
+
 ##### Overview
 "Flashcards" is a mobile device based, React Native with Redux project where users can create and view flashcards.    This project is written in the programming language Javascript via the React Native and Redux frameworks. It was created as a project for Udacity, by Bruce Seymour in 2019. This is a learning project and not meant to be publicly used.   
 
